@@ -1,0 +1,20 @@
+﻿{
+  "type": "notice",
+  "title_raw": "服务器公告",
+  "external_title_raw": "公告",
+  "after_action": "close",
+  "pause": true,
+  "can_close_with_escape": true,
+  "body": [
+    {
+      "type": "plain_message",
+      "contents": "欢迎来到服务器",
+      "width": 220
+    }
+  ],
+  "notice_action": {
+    "label_raw": "确定",
+    "action_type": "show_dialog",
+    "value_raw": "minecraft:ok"
+  }
+}
