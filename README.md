@@ -316,7 +316,7 @@ pause=false
 
 # License
 
-Add your project license here (for example MIT / Apache‑2.0).
+MIT License
 
 ---
 
