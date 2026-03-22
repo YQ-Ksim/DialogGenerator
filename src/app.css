@@ -251,13 +251,13 @@ body {
 }
 
 .preview-overlay {
-  width: clamp(540px, 92%, 760px);
+  width: clamp(640px, 94%, 980px);
   height: min-content;
   position: relative;
 }
 
 .preview-stage.expanded .preview-overlay {
-  width: clamp(760px, 95vw, 1240px);
+  width: clamp(980px, 96vw, 1480px);
 }
 
 .preview-overlay > img {
@@ -287,10 +287,19 @@ body {
 
 .dialog-preview {
   cursor: default;
+  min-width: 640px;
+  width: min(98%, 1120px);
+  aspect-ratio: var(--dialog-aspect, 16 / 10);
 }
 
 .dialog-preview * {
   flex-shrink: 0;
+}
+
+.dialog-preview > img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
 }
 
 .dialog-preview .text-component {
@@ -324,18 +333,18 @@ body {
 
 .dialog-warning-button {
   flex-shrink: 0;
-  background-image: url(/images/dialog/warning_button.png);
+  background-image: var(--dialog-warning-button, url(/images/dialog/warning_button.png));
   background-size: contain;
 }
 
 .dialog-warning-button:hover {
-  background-image: url(/images/dialog/warning_button_highlighted.png);
+  background-image: var(--dialog-warning-button-hover, url(/images/dialog/warning_button_highlighted.png));
 }
 
 .dialog-button {
   border: solid calc(var(--dialog-px) * 2) #000;
   border-bottom-width: calc(var(--dialog-px) * 3);
-  border-image-source: url(/images/dialog/button.png);
+  border-image-source: var(--dialog-button-border, url(/images/dialog/button.png));
   border-image-slice: 2 2 3 2 fill;
   border-image-repeat: repeat;
   display: flex;
@@ -346,12 +355,12 @@ body {
 }
 
 .dialog-button:hover {
-  border-image-source: url(/images/dialog/button_highlighted.png);
+  border-image-source: var(--dialog-button-border-hover, url(/images/dialog/button_highlighted.png));
 }
 
 .dialog-edit-box {
   border: solid calc(var(--dialog-px) * 1) #000;
-  border-image-source: url(/images/dialog/text_field.png);
+  border-image-source: var(--dialog-text-field-border, url(/images/dialog/text_field.png));
   border-image-slice: 1 fill;
   border-image-repeat: repeat;
   display: flex;
@@ -361,12 +370,12 @@ body {
 }
 
 .dialog-checkbox {
-  background-image: url(/images/dialog/checkbox.png);
+  background-image: var(--dialog-checkbox, url(/images/dialog/checkbox.png));
   background-size: contain;
 }
 
 .dialog-checkbox.dialog-selected {
-  background-image: url(/images/dialog/checkbox_selected.png);
+  background-image: var(--dialog-checkbox-selected, url(/images/dialog/checkbox_selected.png));
 }
 
 .dialog-slider {
@@ -375,7 +384,7 @@ body {
 
 .dialog-slider-track {
   border: solid calc(var(--dialog-px) * 1) #000;
-  border-image-source: url(/images/dialog/slider.png);
+  border-image-source: var(--dialog-slider-track, url(/images/dialog/slider.png));
   border-image-slice: 1 fill;
   border-image-repeat: repeat;
   position: absolute;
@@ -386,7 +395,7 @@ body {
 }
 
 .dialog-slider-handle {
-  background-image: url(/images/dialog/slider_handle.png);
+  background-image: var(--dialog-slider-handle, url(/images/dialog/slider_handle.png));
   background-size: contain;
   position: absolute;
   top: 0;
@@ -464,7 +473,7 @@ body {
   top: -2px;
   padding: 3px 1px 1px 3px;
   border: solid 4px #220044;
-  border-image-source: url(/images/tooltip.png);
+  border-image-source: var(--dialog-tooltip-border, var(--tooltip-border-image, url(/images/tooltip.png)));
   border-image-slice: 2 fill;
   border-image-outset: 2px;
   image-rendering: -moz-crisp-edges;
@@ -508,7 +517,7 @@ body {
 .dialog-tooltip {
   padding: var(--dialog-px);
   border: solid calc(var(--dialog-px) * 2) #220044;
-  border-image-source: url(/images/tooltip.png);
+  border-image-source: var(--dialog-tooltip-border, var(--tooltip-border-image, url(/images/tooltip.png)));
   border-image-slice: 2 fill;
   border-image-outset: calc(var(--dialog-px) * 1);
   width: max-content;
@@ -562,13 +571,13 @@ body {
 
   .preview-overlay,
   .preview-stage.expanded .preview-overlay {
-    width: clamp(420px, 96vw, 760px);
+    width: clamp(560px, 96vw, 920px);
   }
 }
 
 @font-face {
   font-family: "MinecraftSeven";
-  src: url("/fonts/seven.ttf") format("truetype");
+  src: url("../fonts/seven.ttf") format("truetype");
 }
 
 .builder-root {

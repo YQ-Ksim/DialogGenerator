@@ -12,6 +12,23 @@ interface DialogPreviewProps {
 
 export function DialogPreview({ lang, text }: DialogPreviewProps) {
   const overlay = useRef<HTMLDivElement>(null)
+  const baseUrl = (import.meta as unknown as { env?: { BASE_URL?: string } }).env?.BASE_URL ?? '/'
+  const dialogImageBase = `${baseUrl}images/dialog/`
+  const backgroundUrl = `${baseUrl}images/dialog/background.webp`
+  const overlayStyle = [
+    '--dialog-px: 1px',
+    '--dialog-aspect: 16 / 10',
+    `--dialog-warning-button: url('${dialogImageBase}warning_button.png')`,
+    `--dialog-warning-button-hover: url('${dialogImageBase}warning_button_highlighted.png')`,
+    `--dialog-button-border: url('${dialogImageBase}button.png')`,
+    `--dialog-button-border-hover: url('${dialogImageBase}button_highlighted.png')`,
+    `--dialog-text-field-border: url('${dialogImageBase}text_field.png')`,
+    `--dialog-checkbox: url('${dialogImageBase}checkbox.png')`,
+    `--dialog-checkbox-selected: url('${dialogImageBase}checkbox_selected.png')`,
+    `--dialog-slider-track: url('${dialogImageBase}slider.png')`,
+    `--dialog-slider-handle: url('${dialogImageBase}slider_handle.png')`,
+    `--dialog-tooltip-border: url('${baseUrl}images/tooltip.png')`,
+  ].join('; ')
 
   const dialog = safeJsonParse(text) ?? {}
   const type = normalizeType(dialog.type)
@@ -35,8 +52,8 @@ export function DialogPreview({ lang, text }: DialogPreviewProps) {
   }, [])
 
   return (
-    <div ref={overlay} class="preview-overlay dialog-preview" style="--dialog-px: 1px;">
-      <img src="/images/dialog/background.webp" alt="" draggable={false} />
+    <div ref={overlay} class="preview-overlay dialog-preview" style={overlayStyle}>
+      <img src={backgroundUrl} alt="" draggable={false} />
       <div style="top: 0; left: 0; width: 100%; height: 100%;">
         <DialogTitle lang={lang} title={dialog.title} />
         <div
