@@ -17,7 +17,6 @@
     "deepslate": "^0.25.1",
     "deepslate-1.20.4": "npm:deepslate@0.20.1",
     "dompurify": "^3.2.6",
-    "generators": "file:..",
     "marked": "^4.0.10",
     "preact": "^10.26.4",
     "spark-md5": "^3.0.2",
