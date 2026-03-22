@@ -1,0 +1,32 @@
+{
+  "name": "dialog-generator",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@spyglassmc/core": "^0.4.43",
+    "@spyglassmc/json": "^0.3.47",
+    "@spyglassmc/locales": "^0.3.22",
+    "@spyglassmc/mcdoc": "^0.3.47",
+    "@zip.js/zip.js": "^2.4.5",
+    "deepslate": "^0.25.1",
+    "deepslate-1.20.4": "npm:deepslate@0.20.1",
+    "dompurify": "^3.2.6",
+    "generators": "file:..",
+    "marked": "^4.0.10",
+    "preact": "^10.26.4",
+    "spark-md5": "^3.0.2",
+    "vscode-languageserver-textdocument": "^1.0.12"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.2",
+    "@types/spark-md5": "^3.0.5",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.8"
+  }
+}
