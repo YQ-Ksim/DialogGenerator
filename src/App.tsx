@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'preact/hooks'
+﻿import { useEffect, useMemo, useState } from 'preact/hooks'
 import { DialogBuilder } from './components/DialogBuilder'
 import { DialogPreview } from './components/DialogPreview'
 import { createTemplate, DIALOG_TYPES, getDialogType, normalizeDialog, stringifyDialog, type DialogType } from './dialogModel'
@@ -10,9 +10,9 @@ const DEFAULT_TEMPLATE: DialogType = 'notice'
 
 const APP_COPY = {
   zh: {
-    pageTitle: '我的世界对话生成器',
-    appTitle: '我的世界对话生成器',
-    subtitle: 'Java 版 Dialog JSON 的 Schema 驱动编辑器（1.21.6+）。',
+    pageTitle: 'Minecraft 对话生成器',
+    appTitle: 'Minecraft 对话生成器',
+    subtitle: '适用于 Java 版 Dialog JSON（1.21.6+）的 Schema 驱动编辑器。',
     basedOn: '基于原项目：',
     formatJson: '格式化 JSON',
     jsonToBuilder: 'JSON 同步到构建器',
@@ -20,6 +20,9 @@ const APP_COPY = {
     jsonSource: '对话 JSON 源码',
     jsonError: 'JSON 错误',
     preview: '游戏内预览',
+    previewExpand: '展开预览',
+    previewCollapse: '收起预览',
+    previewRefresh: '刷新预览',
     invalidJson: 'JSON 无效',
     language: '语言',
     languageZh: '简体中文',
@@ -36,6 +39,9 @@ const APP_COPY = {
     jsonSource: 'Dialog JSON Source',
     jsonError: 'JSON error',
     preview: 'In-Game Preview',
+    previewExpand: 'Expand Preview',
+    previewCollapse: 'Collapse Preview',
+    previewRefresh: 'Refresh Preview',
     invalidJson: 'Invalid JSON',
     language: 'Language',
     languageZh: '简体中文',
@@ -47,6 +53,8 @@ export function App() {
   const [lang, setLang] = useState<Language>(() => getInitialLanguage())
   const [builderDialog, setBuilderDialog] = useState<any>(() => createTemplate(DEFAULT_TEMPLATE))
   const [jsonText, setJsonText] = useState(() => stringifyDialog(createTemplate(DEFAULT_TEMPLATE)))
+  const [previewExpanded, setPreviewExpanded] = useState(false)
+  const [previewRefreshToken, setPreviewRefreshToken] = useState(0)
   const copy = APP_COPY[lang]
 
   const parseResult = useMemo(() => {
@@ -78,6 +86,21 @@ export function App() {
       document.title = copy.pageTitle
     }
   }, [lang, copy.pageTitle])
+
+  useEffect(() => {
+    if (!previewExpanded) {
+      return
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setPreviewExpanded(false)
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [previewExpanded])
 
   const formatJson = () => {
     if (parseResult.parsed !== undefined) {
@@ -129,7 +152,7 @@ export function App() {
       <div class="toolbar">
         <div class="template-group">
           {DIALOG_TYPES.map((type) => (
-            <button type="button" class={`btn ${selectedTemplate === type ? 'active' : ''}`} onClick={() => applyTemplate(type)}>
+            <button key={type} type="button" class={`btn ${selectedTemplate === type ? 'active' : ''}`} onClick={() => applyTemplate(type)}>
               {type}
             </button>
           ))}
@@ -184,10 +207,20 @@ export function App() {
           {parseResult.error && <p class="parse-error">{copy.jsonError}: {parseResult.error}</p>}
         </section>
 
-        <section class="preview-panel">
-          <h2>{copy.preview}</h2>
-          <div class="preview-stage">
-            <DialogPreview lang={lang} text={jsonText} />
+        <section class={`preview-panel ${previewExpanded ? 'preview-panel-expanded' : ''}`}>
+          <div class="preview-panel-head">
+            <h2>{copy.preview}</h2>
+            <div class="preview-actions">
+              <button type="button" class="btn small" onClick={() => setPreviewRefreshToken((value) => value + 1)}>
+                {copy.previewRefresh}
+              </button>
+              <button type="button" class={`btn small ${previewExpanded ? 'active' : ''}`} onClick={() => setPreviewExpanded((value) => !value)}>
+                {previewExpanded ? copy.previewCollapse : copy.previewExpand}
+              </button>
+            </div>
+          </div>
+          <div class={`preview-stage ${previewExpanded ? 'expanded' : ''}`}>
+            <DialogPreview key={`preview-${previewRefreshToken}-${previewExpanded ? 'expanded' : 'normal'}`} lang={lang} text={jsonText} />
           </div>
         </section>
       </div>
